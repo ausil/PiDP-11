@@ -7,20 +7,22 @@ set -e
 # Debugging:
 # set -x
 
-pwd
-export MAKETARGETS="pidp1170_blinkenlightd"
+MAKETARGETS="pidp1170_blinkenlightd"
+SERVERBASE=/opt/pidp11/src/11_pidp_server
 
-#export MAKE_CONFIGURATION=DEBUG
-export MAKE_CONFIGURATION=RELEASE
+#MAKE_CONFIGURATION=DEBUG
+MAKE_CONFIGURATION=RELEASE
 
 (
 # the Blinkenlight API server for PiDP11
-cd /opt/pidp11/src/11_pidp_server/scanswitch
+pushd $SERVERBASE/scanswitch
 make
-cd ../pidp11
+popd
+pushd $SERVERBASE/pidp11
 echo ; echo "*** blinkenlight_server for PiDP11"
 MAKE_TARGET_ARCH=RPI make $MAKEOPTIONS $MAKETARGETS
 )
+popd
 
 echo
 echo "Server and scansw binaries compiled OK!"
