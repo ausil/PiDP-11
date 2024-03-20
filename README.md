@@ -1,4 +1,4 @@
-i# Github repository for the PiDP-11 project
+# Github repository for the PiDP-11 project
 
 This is a packing of the offical bits for the pidp-11 project in a git repo with some updates 
 

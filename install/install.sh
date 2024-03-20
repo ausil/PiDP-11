@@ -7,17 +7,17 @@
 PATH=/usr/sbin:/usr/bin:/sbin:/bin
 
 
-apt-get update
+sudo apt-get update
 #Install SDL2, optionally used for PDP-11 graphics terminal emulation
-apt-get install libsdl2-dev
+sudo apt-get install -y libsdl2-dev
 #Install pcap, optionally used when PDP-11 networking is enabled
-apt-get install libpcap-dev
+sudo apt-get install -y libpcap-dev
 #Install readline, used for command-line editing in simh
-apt-get install libreadline-dev
+sudo apt-get install -y libreadline-dev
 # Install screen
-apt-get install screen
+sudo apt-get install -y screen
 # Install newer RPC system
-apt-get install libtirpc-dev
+sudo apt-get install -y libtirpc-dev
 
 
 # 20231218 - deal with user choice of precompiled 64/32 bit or compile from src
@@ -31,22 +31,22 @@ while true; do
         [3]* ) 
             subdir=backup32bit-binaries
             echo Copying binaries from /opt/pidp11/bin/$subdir
-            sudo cp $pidpath/bin/$subdir/pdp11_realcons $pidpath/src/02.3_simh/4.x+realcons/bin-rpi/pdp11_realcons
-            sudo cp $pidpath/bin/$subdir/scansw $pidpath/src/11_pidp_server/scanswitch/scansw
-            sudo cp $pidpath/bin/$subdir/pidp1170_blinkenlightd $pidpath/src/11_pidp_server/pidp11/bin-rpi/pidp1170_blinkenlightd
+            cp $pidpath/bin/$subdir/pdp11_realcons $pidpath/src/02.3_simh/4.x+realcons/bin-rpi/pdp11_realcons
+            cp $pidpath/bin/$subdir/scansw $pidpath/src/11_pidp_server/scanswitch/scansw
+            cp $pidpath/bin/$subdir/pidp1170_blinkenlightd $pidpath/src/11_pidp_server/pidp11/bin-rpi/pidp1170_blinkenlightd
             break;;
         [6]* ) 
             subdir=backup64bit-binaries
-            sudo cp $pidpath/bin/$subdir/pdp11_realcons $pidpath/src/02.3_simh/4.x+realcons/bin-rpi/pdp11_realcons
-            sudo cp $pidpath/bin/$subdir/scansw $pidpath/src/11_pidp_server/scanswitch/scansw
-            sudo cp $pidpath/bin/$subdir/pidp1170_blinkenlightd $pidpath/src/11_pidp_server/pidp11/bin-rpi/pidp1170_blinkenlightd
+            cp $pidpath/bin/$subdir/pdp11_realcons $pidpath/src/02.3_simh/4.x+realcons/bin-rpi/pdp11_realcons
+            cp $pidpath/bin/$subdir/scansw $pidpath/src/11_pidp_server/scanswitch/scansw
+            cp $pidpath/bin/$subdir/pidp1170_blinkenlightd $pidpath/src/11_pidp_server/pidp11/bin-rpi/pidp1170_blinkenlightd
             break;;
         [Cc]* ) 
-            sudo rm $pidpath/src/02.3_simh/4.x+realcons/bin-rpi/pdp11_realcons
-            sudo rm $pidpath/src/11_pidp_server/scanswitch/scansw
-            sudo rm $pidpath/src/11_pidp_server/pidp11/bin-rpi/pidp1170_blinkenlightd
-            sudo $pidpath/src/makeclient.sh
-            sudo $pidpath/src/makeserver.sh
+            rm $pidpath/src/02.3_simh/4.x+realcons/bin-rpi/pdp11_realcons
+            rm $pidpath/src/11_pidp_server/scanswitch/scansw
+            rm $pidpath/src/11_pidp_server/pidp11/bin-rpi/pidp1170_blinkenlightd
+            $pidpath/src/makeclient.sh
+            $pidpath/src/makeserver.sh
             break;;
         * ) echo "Please answer 3,6 or C.";;
     esac
@@ -70,7 +70,7 @@ config_file="/etc/xdg/lxsession/LXDE-pi/autostart"
 # Check if the line already exists in the config file
 if ! grep -qF "$new_config_line" "$config_file"; then
     # If the line doesn't exist, append it to the file
-    sudo echo "$new_config_line" >> "$config_file"
+    echo "$new_config_line" >> "$config_file"
     echo "Line added to $config_file"
 else
     echo "Line already exists in $config_file"
@@ -111,9 +111,8 @@ while true; do
     case $prxn in
         [Yy]* ) 
 	    cd /opt/pidp11
-            sudo wget http://pidp.net/pidp11/systems.tar.gz
-            sudo gzip -d systems.tar.gz
-            sudo tar -xvf systems.tar
+            wget -c http://pidp.net/pidp11/systems.tar.gz
+            tar -xvf systems.tar.gz
 	    break;;
         [Nn]* ) 
 	    echo operating systems not added at your request. You can do it later.
